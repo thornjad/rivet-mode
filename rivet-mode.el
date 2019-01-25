@@ -1,12 +1,10 @@
-;; rivet-mode.el -- supports Apache Rivet files
+;; rivet-mode.el -- major mode for editing Apache Rivet files
 
 ;; Copyright 2019 Jade Michael Thornton
 
 ;; Licensed under the Apache License, Version 2.0 (the "License");
 ;; you may not use this file except in compliance with the License.
-;; You may obtain a copy of the License at
-
-;;	http://www.apache.org/licenses/LICENSE-2.0
+;; See the included <LICENSE> file for details.
 
 ;; Unless required by applicable law or agreed to in writing, software
 ;; distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,11 +12,14 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 
-;; It does this the easy way, of course, by switching between TCL and HTML
-;; (SGML) modes. Based on two-mode-mode.el by David N. Welton.
+;; Commentary
 
-;; two-mode-mode.el is:
-;; Copyright 1999-2004 The Apache Software Foundation
+;; Rivet mode supports font-lock, indentation and all the other goodies for
+;; Apache Rivet files. It does this by intelligently (allegedly) switching
+;; between TCL and HTML modes.
+
+;; The structure of Rivet mode is based on two-mode-mode, developed in 1999 by
+;; David N. Welton and the Apache Software Foundation.
 
 (defvar default-mode (list "HTML" 'html-mode))
 (defvar second-mode (list "Tcl" "<?" "?>" 'tcl-mode))
@@ -30,7 +31,7 @@
 
 ;; Rivet mode hook
 (defvar rivet-hook nil
-  "*Hook called by `rivet'.")
+  "*Hook called by `rivet-mode'.")
 (setq rivet-hook nil)
 
 ;; Mode switching hook

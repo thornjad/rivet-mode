@@ -4,9 +4,8 @@ Rivet mode enables mode-switching between TCL and HTML in Rivet files. This is
 superior to support provided through MMM mode since indentation and other
 functionality is preserved.
 
-Rivet mode is based on work by David N. Welton and the Apache Software
-Foundation on two-mode-mode.el. two-mode-mode.el is copyright 2004 by the Apache
-Software Foundation. Rivet mode preserves the same license.
+Rivet mode is based on work in 1999 on two-mode-mode by David N. Welton and the
+Apache Software Foundation.
 
 Copyright 2019 Jade Michael Thornton
 

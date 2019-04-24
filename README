@@ -1,12 +1,8 @@
-rivet-mode.el -- Apache Rivet major mode
+rivet-mode.el -- Support mode-switching in Apache Rivet
 
-Rivet mode enables mode-switching between TCL and HTML in Rivet files. This is
-superior to support provided through MMM mode since indentation and other
-functionality is preserved.
-
-Rivet mode is based on work in 1999 on two-mode-mode by David N. Welton and the
-Apache Software Foundation.
+Rivet mode provides mode-switching between TCL and Web modes in Rivet files,
+leveraging the power of polymode for seamless transitions.
 
 Copyright 2019 Jade Michael Thornton
 
-Rivet mode is licensed under the Apache License, Version 2.0
+Rivet mode is licensed under the ISC license

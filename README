@@ -1,8 +1,9 @@
 rivet-mode.el -- Support mode-switching in Apache Rivet
 
-Rivet mode provides mode-switching between TCL and Web modes in Rivet files,
-leveraging the power of polymode for seamless transitions.
+Rivet mode enables mode-switching within Apache Rivet files, preserving
+indentation and other functionality. Rivet mode is based on work done on
+two-mode-mode by the Apache Software Foundation in 1999.
 
-Copyright 2019 Jade Michael Thornton
+Copyright (c) 2019 Jade Michael Thornton
 
 Rivet mode is licensed under the ISC license

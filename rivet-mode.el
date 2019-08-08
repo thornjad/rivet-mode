@@ -1,4 +1,4 @@
-;;; rivet-mode.el -- A major mode for Apache Rivet
+;;; rivet-mode.el -- A major mode for Apache Rivet -*- lexical-binding: t; -*-
 ;;
 ;; Author: Jade Michael Thornton
 ;; Copyright 2019

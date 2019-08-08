@@ -35,7 +35,7 @@
 (defvar host-mode (list "Web" 'web-mode))
 (defvar inner-mode (list "Tcl" "<?" "?>" 'tcl-mode))
 
-(defvar rivet-mode-update 0)
+(defvar rivet-mode-update nil)
 (defvar rivet-mode-idle-timer nil)
 (defvar rivet-mode-p nil)
 (defvar rivet-mode-delay 0)
@@ -50,25 +50,24 @@
 
 (defun rivet-mode-setup ()
   (add-hook 'post-command-hook 'rivet-mode-need-update nil t)
-  (make-local-variable 'minor-mode-alist)
   (make-local-variable 'rivet-mode-p)
   (setq rivet-mode-p t)
   (when rivet-mode-idle-timer
     (cancel-timer rivet-mode-idle-timer))
   (setq rivet-mode-idle-timer
-				(run-with-idle-timer rivet-mode-delay t
-														 'rivet-mode-update-mode))
+				(run-with-idle-timer rivet-mode-delay t 'rivet-mode-update-mode))
+  (make-local-variable 'minor-mode-alist)
   (or (assq 'rivet-mode-p minor-mode-alist)
      (setq minor-mode-alist
 					 (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
 
 (defun rivet-mode-need-update ()
-  (setq rivet-mode-update 1))
+  (setq rivet-mode-update t))
 
 (defun rivet-change-mode (to-mode func)
-  (if (string= to-mode mode-name)
-      t
-    (progn
+  (let ((mode (if (listp mode-name) (car (last mode-name)) mode-name)))
+    (if (string= to-mode mode)
+        t
       (funcall func)
       ;; After the mode was set, we reread the "Local Variables" section.
       (hack-local-variables)
@@ -78,36 +77,32 @@
 					(run-hooks 'rivet-switch-hook))
       (if (eq font-lock-mode t)
 					(font-lock-ensure))
-			(turn-on-font-lock-if-desired))))
+      (if (fboundp 'turn-on-font-lock-if-enabled)
+          (turn-on-font-lock-if-enabled)
+        (turn-on-font-lock-if-desired)))))
 
 (defun rivet-mode-update-mode ()
   (when (and rivet-mode-p rivet-mode-update)
-    (setq rivet-mode-update 0)
-		(let ((flag 0)
-					(mode inner-mode)
-					(lm -1)
-					(rm -1))
+    (setq rivet-mode-update nil)
+		(let ((lm -1) (rm -1))
 			(save-excursion
-				(if (search-backward (cadr mode) nil t)
-						(setq lm (point))
-					(setq lm -1)))
+				(if (search-backward (cadr inner-mode) nil t)
+						(setq lm (point))))
 			(save-excursion
-				(if (search-backward (car (cddr mode)) nil t)
-						(setq rm (point))
-					(setq rm -1)))
+				(if (search-backward (car (cddr inner-mode)) nil t)
+						(setq rm (point))))
 			(if (and (not (and (= lm -1) (= rm -1))) (>= lm rm))
-					(progn
-						(setq flag 1)
-						(rivet-change-mode (car mode) (car (cdr (cddr mode))))))
-			(if (= flag 0)
-					(rivet-change-mode (car host-mode) (cadr host-mode))))))
+          (rivet-change-mode (car inner-mode) (car (cdr (cddr inner-mode))))
+        (rivet-change-mode (car host-mode) (cadr host-mode))))))
 
 ;;;###autoload
 (defun rivet-mode ()
-  "Turn on rivet-mode"
+  "Turn on Rivet mode"
   (interactive)
+  (setq rivet-mode-update t)
   (funcall (cadr host-mode))
   (rivet-mode-setup)
+  (rivet-mode-update-mode)
   (if rivet-hook
 			(run-hooks 'rivet-hook)))
 

@@ -30,6 +30,9 @@
 
 (defvar default-mode (list "HTML" 'html-mode))
 (defvar second-mode (list "Tcl" "<?" "?>" 'tcl-mode))
+(require 'tcl)
+(require 'web-mode)
+
 
 (defvar rivet-update 0)
 (defvar rivet-mode-idle-timer nil)

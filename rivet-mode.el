@@ -3,7 +3,7 @@
 ;; Author: Jade Michael Thornton
 ;; Copyright 2019
 ;; Version: 2.0.0
-;; Package-Requires ((emacs "25") (polymode "0.1.5") (web-mode) (tcl-mode))
+;; Package-Requires ((emacs "25") (polymode "0.1.5") (web-mode) (tcl))
 ;; URL: https://gitlab.com/thornjad/rivet
 ;;
 ;; This file is not part of GNU Emacs
@@ -27,7 +27,7 @@
 
 (require 'polymode)
 (require 'web-mode)
-(require 'tcl-mode)
+(require 'tcl)
 
 (define-hostmode rivet-hostmode
 	:mode 'web-mode)

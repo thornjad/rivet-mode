@@ -59,8 +59,8 @@
 				(run-with-idle-timer rivet-mode-delay t
 														 'rivet-mode-update-mode))
   (or (assq 'rivet-mode-p minor-mode-alist)
-      (setq minor-mode-alist
-						(cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
+     (setq minor-mode-alist
+					 (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
 
 (defun rivet-mode-need-update ()
   (setq rivet-update 1))

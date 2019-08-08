@@ -35,7 +35,7 @@
 (defvar host-mode (list "Web" 'web-mode))
 (defvar inner-mode (list "Tcl" "<?" "?>" 'tcl-mode))
 
-(defvar rivet-update 0)
+(defvar rivet-mode-update 0)
 (defvar rivet-mode-idle-timer nil)
 (defvar rivet-mode-p nil)
 (defvar rivet-mode-delay (/ (float 1) (float 8)))
@@ -63,7 +63,7 @@
 					 (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
 
 (defun rivet-mode-need-update ()
-  (setq rivet-update 1))
+  (setq rivet-mode-update 1))
 
 (defun rivet-change-mode (to-mode func)
   (if (string= to-mode mode-name)
@@ -81,8 +81,8 @@
 			(turn-on-font-lock-if-desired))))
 
 (defun rivet-mode-update-mode ()
-  (when (and rivet-mode-p rivet-update)
-    (setq rivet-update 0)
+  (when (and rivet-mode-p rivet-mode-update)
+    (setq rivet-mode-update 0)
 		(let ((flag 0)
 					(mode inner-mode)
 					(lm -1)

@@ -37,32 +37,30 @@
 
 (defvar rivet-update 0)
 (defvar rivet-mode-idle-timer nil)
-(defvar rivet-bool nil)
+(defvar rivet-mode-p nil)
 (defvar rivet-mode-delay (/ (float 1) (float 8)))
 
-;; Rivet mode hook
 (defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")
-(setq rivet-hook nil)
-
-;; Mode switching hook
 (defvar rivet-switch-hook nil
   "*Hook called upon mode switching.")
-(setq rivet-switch-hook nil)
+
+
+;;; Setup and funs
 
 (defun rivet-mode-setup ()
   (add-hook 'post-command-hook 'rivet-mode-need-update nil t)
   (make-local-variable 'minor-mode-alist)
-  (make-local-variable 'rivet-bool)
-  (setq rivet-bool t)
+  (make-local-variable 'rivet-mode-p)
+  (setq rivet-mode-p t)
   (when rivet-mode-idle-timer
     (cancel-timer rivet-mode-idle-timer))
   (setq rivet-mode-idle-timer
 				(run-with-idle-timer rivet-mode-delay t
 														 'rivet-mode-update-mode))
-  (or (assq 'rivet-bool minor-mode-alist)
+  (or (assq 'rivet-mode-p minor-mode-alist)
       (setq minor-mode-alist
-						(cons '(rivet-bool " rivet-mode") minor-mode-alist))))
+						(cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
 
 (defun rivet-mode-need-update ()
   (setq rivet-update 1))
@@ -85,7 +83,7 @@
 			(turn-on-font-lock-if-desired))))
 
 (defun rivet-mode-update-mode ()
-  (when (and rivet-bool rivet-update)
+  (when (and rivet-mode-p rivet-update)
     (setq rivet-update 0)
 		(let ((flag 0)
 					(mode inner-mode)

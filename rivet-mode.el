@@ -33,7 +33,7 @@
 (require 'web-mode)
 
 (defvar host-mode (list "Web" 'web-mode))
-(defvar inner-mode (list "Tcl" "<?" "?>" 'tcl-mode))
+(defvar inner-mode (list "TCL" "<?" "?>" 'tcl-mode))
 
 (defvar rivet-mode-update nil)
 (defvar rivet-mode-idle-timer nil)

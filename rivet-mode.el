@@ -112,7 +112,7 @@
 			(run-hooks 'rivet-hook)))
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.rvt$" . rivet-mode))
+(add-to-list 'auto-mode-alist '("\\.rvt\\'" . rivet-mode))
 
 (provide 'rivet-mode)
 

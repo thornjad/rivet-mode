@@ -32,7 +32,7 @@
 (require 'tcl)
 (require 'web-mode)
 
-(defvar host-mode (list "HTML" 'html-mode))
+(defvar host-mode (list "Web" 'web-mode))
 (defvar inner-mode (list "Tcl" "<?" "?>" 'tcl-mode))
 
 (defvar rivet-update 0)
@@ -71,8 +71,6 @@
     (progn
       (funcall func)
       ;; After the mode was set, we reread the "Local Variables" section.
-      ;; We do need this for example in SGML-mode if "sgml-parent-document"
-      ;; was set, or otherwise it will be reset to nil when sgml-mode is left.
       (hack-local-variables)
 
       (rivet-mode-setup)

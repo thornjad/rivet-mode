@@ -38,7 +38,7 @@
 (defvar rivet-mode-update 0)
 (defvar rivet-mode-idle-timer nil)
 (defvar rivet-mode-p nil)
-(defvar rivet-mode-delay (/ (float 1) (float 8)))
+(defvar rivet-mode-delay 0)
 
 (defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")

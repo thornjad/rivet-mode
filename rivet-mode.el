@@ -28,11 +28,12 @@
 ;;
 ;;; Code:
 
-(defvar default-mode (list "HTML" 'html-mode))
-(defvar second-mode (list "Tcl" "<?" "?>" 'tcl-mode))
+
 (require 'tcl)
 (require 'web-mode)
 
+(defvar host-mode (list "HTML" 'html-mode))
+(defvar inner-mode (list "Tcl" "<?" "?>" 'tcl-mode))
 
 (defvar rivet-update 0)
 (defvar rivet-mode-idle-timer nil)
@@ -80,14 +81,14 @@
       (if rivet-switch-hook
 					(run-hooks 'rivet-switch-hook))
       (if (eq font-lock-mode t)
-					(font-lock-fontify-buffer))
+					(font-lock-ensure))
 			(turn-on-font-lock-if-desired))))
 
 (defun rivet-mode-update-mode ()
   (when (and rivet-bool rivet-update)
     (setq rivet-update 0)
 		(let ((flag 0)
-					(mode second-mode)
+					(mode inner-mode)
 					(lm -1)
 					(rm -1))
 			(save-excursion
@@ -103,13 +104,13 @@
 						(setq flag 1)
 						(rivet-change-mode (car mode) (car (cdr (cddr mode))))))
 			(if (= flag 0)
-					(rivet-change-mode (car default-mode) (cadr default-mode))))))
+					(rivet-change-mode (car host-mode) (cadr host-mode))))))
 
 ;;;###autoload
 (defun rivet-mode ()
   "Turn on rivet-mode"
   (interactive)
-  (funcall (cadr default-mode))
+  (funcall (cadr host-mode))
   (rivet-mode-setup)
   (if rivet-hook
 			(run-hooks 'rivet-hook)))

@@ -3,7 +3,7 @@
 ;; Author: Jade Michael Thornton
 ;; Copyright 2019
 ;; Version: 3.0.0
-;; Package-Requires ((emacs "25") (polymode "0.1.5") (web-mode) (tcl))
+;; Package-Requires ((emacs "25") (web-mode) (tcl))
 ;; URL: https://gitlab.com/thornjad/rivet
 ;;
 ;; This file is not part of GNU Emacs
@@ -55,11 +55,11 @@
   (when rivet-mode-idle-timer
     (cancel-timer rivet-mode-idle-timer))
   (setq rivet-mode-idle-timer
-				(run-with-idle-timer rivet-mode-delay t 'rivet-mode-update-mode))
+        (run-with-idle-timer rivet-mode-delay t 'rivet-mode-update-mode))
   (make-local-variable 'minor-mode-alist)
   (or (assq 'rivet-mode-p minor-mode-alist)
      (setq minor-mode-alist
-					 (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
+           (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
 
 (defun rivet-mode-need-update ()
   (setq rivet-mode-update t))
@@ -74,9 +74,9 @@
 
       (rivet-mode-setup)
       (if rivet-switch-hook
-					(run-hooks 'rivet-switch-hook))
+          (run-hooks 'rivet-switch-hook))
       (if (eq font-lock-mode t)
-					(font-lock-ensure))
+          (font-lock-ensure))
       (if (fboundp 'turn-on-font-lock-if-enabled)
           (turn-on-font-lock-if-enabled)
         (turn-on-font-lock-if-desired)))))
@@ -84,14 +84,14 @@
 (defun rivet-mode-update-mode ()
   (when (and rivet-mode-p rivet-mode-update)
     (setq rivet-mode-update nil)
-		(let ((lm -1) (rm -1))
-			(save-excursion
-				(if (search-backward (cadr inner-mode) nil t)
-						(setq lm (point))))
-			(save-excursion
-				(if (search-backward (car (cddr inner-mode)) nil t)
-						(setq rm (point))))
-			(if (and (not (and (= lm -1) (= rm -1))) (>= lm rm))
+    (let ((lm -1) (rm -1))
+      (save-excursion
+        (if (search-backward (cadr inner-mode) nil t)
+            (setq lm (point))))
+      (save-excursion
+        (if (search-backward (car (cddr inner-mode)) nil t)
+            (setq rm (point))))
+      (if (and (not (and (= lm -1) (= rm -1))) (>= lm rm))
           (rivet-change-mode (car inner-mode) (car (cdr (cddr inner-mode))))
         (rivet-change-mode (car host-mode) (cadr host-mode))))))
 
@@ -104,7 +104,7 @@
   (rivet-mode-setup)
   (rivet-mode-update-mode)
   (if rivet-hook
-			(run-hooks 'rivet-hook)))
+      (run-hooks 'rivet-hook)))
 
 (provide 'rivet-mode)
 

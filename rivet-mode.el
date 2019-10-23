@@ -74,18 +74,11 @@
 
 (defun rivet-mode-update-mode ()
   (when rivet-mode-p
-    (let ((lm -1) (rm -1))
+    (let ((last-left-delim -1) (last-right-delim -1))
       (save-excursion
         (if (search-backward (caddr rivet-mode-inner-mode) nil t)
             (setq last-left-delim (point))))
       (save-excursion
-        (if (search-backward (car (cddr inner-mode)) nil t)
-            (setq rm (point))))
-      (message "checking mode")
-      (if (and (not (and (= lm -1) (= rm -1))) (>= lm rm))
-          (rivet-mode-maybe-change-mode inner-mode)
-        (rivet-mode-maybe-change-mode host-mode)))))
-
         (if (search-backward (cadddr rivet-mode-inner-mode) nil t)
             (setq last-right-delim (point))))
       (if (and (not (and (= last-left-delim -1)

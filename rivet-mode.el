@@ -76,8 +76,8 @@
   (when rivet-mode-p
     (let ((lm -1) (rm -1))
       (save-excursion
-        (if (search-backward (cadr inner-mode) nil t)
-            (setq lm (point))))
+        (if (search-backward (caddr rivet-mode-inner-mode) nil t)
+            (setq last-left-delim (point))))
       (save-excursion
         (if (search-backward (car (cddr inner-mode)) nil t)
             (setq rm (point))))

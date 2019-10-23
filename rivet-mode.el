@@ -2,7 +2,6 @@
 ;;
 ;; Author: Jade Michael Thornton
 ;; Copyright 2019
-;; Version: 3.2.0
 ;; Package-Requires ((emacs "25") (web-mode) (tcl))
 ;; URL: https://gitlab.com/thornjad/rivet
 ;;

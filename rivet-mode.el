@@ -66,7 +66,6 @@
 
 (defun rivet-mode-maybe-change-mode (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
-    (message rivet-mode-current-mode)
     (rivet-mode-change-mode (car to-mode) (car (cdr (cddr to-mode))))))
   (unless (string= major-mode (car to-mode))
 

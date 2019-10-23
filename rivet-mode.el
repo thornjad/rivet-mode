@@ -77,7 +77,7 @@
     (rivet-mode-change-mode to-mode)))
 
 (defun rivet-mode-update-mode ()
-  (when rivet-mode-p
+  (when (and rivet-mode-p (not (region-active-p)))
     (let ((last-left-delim -1) (last-right-delim -1))
       (save-excursion
         (if (search-backward (caddr rivet-mode-inner-mode) nil t)

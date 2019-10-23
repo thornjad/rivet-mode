@@ -26,6 +26,9 @@
 ;; indentation and other functionality. Rivet mode is based on work done on
 ;; two-mode-mode by the Apache Software Foundation in 1999.
 ;;
+;; Note that hooks are not a focus right now and may not work. They will get
+;; more attention later.
+;;
 ;;; Code:
 
 
@@ -35,9 +38,6 @@
 (defvar host-mode (list "Web" 'web-mode))
 (defvar inner-mode (list "TCL" "<?" "?>" 'tcl-mode))
 
-(defvar rivet-mode-maybe-update-p nil)
-(defvar rivet-mode-delay (float 1))
-(defvar-local rivet-mode-idle-timer nil)
 (defvar-local rivet-mode-p nil)
 (defvar-local rivet-mode-current-mode nil)
 
@@ -48,25 +48,6 @@
 
 
 ;;; Setup and funs
-
-(defun rivet-mode-reset-timer ()
-  "Set up idle timer to check for mode change."
-  (when rivet-mode-idle-timer
-    (cancel-timer rivet-mode-idle-timer))
-  (setq rivet-mode-idle-timer
-        (run-with-idle-timer rivet-mode-delay t 'rivet-mode-update-mode)))
-
-(defun rivet-mode-setup ()
-  (add-hook 'post-command-hook 'rivet-mode-need-update nil t)
-  (setq rivet-mode-current-mode (car host-mode))
-  (setq rivet-mode-p t)
-  (make-local-variable 'minor-mode-alist)
-  (or (assq 'rivet-mode-p minor-mode-alist)
-     (setq minor-mode-alist
-           (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
-
-(defun rivet-mode-need-update ()
-  (setq rivet-mode-maybe-update-p t))
 
 (defun rivet-mode-change-mode (to-mode func)
   (let ((mode (if (listp mode-name) (car (last mode-name)) mode-name)))
@@ -92,8 +73,7 @@
     (rivet-mode-change-mode (car to-mode) (car (cdr (cddr to-mode))))))
 
 (defun rivet-mode-update-mode ()
-  (when (and rivet-mode-p rivet-mode-maybe-update-p)
-    (setq rivet-mode-maybe-update-p nil)
+  (when rivet-mode-p
     (let ((lm -1) (rm -1))
       (save-excursion
         (if (search-backward (cadr inner-mode) nil t)
@@ -104,14 +84,22 @@
       (message "checking mode")
       (if (and (not (and (= lm -1) (= rm -1))) (>= lm rm))
           (rivet-mode-maybe-change-mode inner-mode)
-        (rivet-mode-maybe-change-mode host-mode))))
-    (rivet-mode-reset-timer))
+        (rivet-mode-maybe-change-mode host-mode)))))
+
+(defun rivet-mode-setup ()
+  ;; TODO can we use a less used hook?
+  (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
+  (setq-local rivet-mode-current-mode (car host-mode))
+  (setq-local rivet-mode-p t)
+  (make-local-variable 'minor-mode-alist)
+  (or (assq 'rivet-mode-p minor-mode-alist)
+     (setq minor-mode-alist
+           (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
 
 ;;;###autoload
 (defun rivet-mode ()
   "Turn on Rivet mode"
   (interactive)
-  (setq rivet-mode-maybe-update-p t)
   (funcall (cadr host-mode))
   (rivet-mode-setup)
   (rivet-mode-update-mode)

@@ -86,23 +86,33 @@
           (rivet-mode-maybe-change-mode inner-mode)
         (rivet-mode-maybe-change-mode host-mode)))))
 
-(defun rivet-mode-setup ()
-  ;; TODO can we use a less used hook?
-  (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
-  (setq-local rivet-mode-current-mode (car host-mode))
-  (setq-local rivet-mode-p t)
-  (make-local-variable 'minor-mode-alist)
-  (or (assq 'rivet-mode-p minor-mode-alist)
-     (setq minor-mode-alist
-           (cons '(rivet-mode-p " rivet-mode") minor-mode-alist))))
+        (if (search-backward (cadddr rivet-mode-inner-mode) nil t)
+            (setq last-right-delim (point))))
+      (if (and (not (and (= last-left-delim -1)
+                     (= last-right-delim -1)))
+             (>= last-left-delim last-right-delim))
+          (rivet-mode-maybe-change-mode rivet-mode-inner-mode)
+        (rivet-mode-maybe-change-mode rivet-mode-host-mode)))))
 
 ;;;###autoload
 (defun rivet-mode ()
   "Turn on Rivet mode"
   (interactive)
-  (funcall (cadr host-mode))
-  (rivet-mode-setup)
+
+  (funcall (cadr rivet-mode-host-mode))
+  (setq-local rivet-mode-p t)
+
+  ;; TODO need a way to make this take less time, and/or not call on EVERY post
+  ;; command
+  (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
+  (make-local-variable 'minor-mode-alist)
+
+  (or (assq 'rivet-mode-p minor-mode-alist)
+     (setq minor-mode-alist
+           (cons '(rivet-mode-p " rivet-mode") minor-mode-alist)))
+
   (rivet-mode-update-mode)
+
   (if rivet-hook
       (run-hooks 'rivet-hook)))
 

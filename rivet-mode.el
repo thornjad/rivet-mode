@@ -39,7 +39,6 @@
 (defvar inner-mode (list "TCL" "<?" "?>" 'tcl-mode))
 
 (defvar-local rivet-mode-p nil)
-(defvar-local rivet-mode-current-mode nil)
 
 (defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")
@@ -67,10 +66,9 @@
 
 (defun rivet-mode-maybe-change-mode (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
-  (unless (string= rivet-mode-current-mode (car to-mode))
-    (setq rivet-mode-current-mode (car to-mode))
     (message rivet-mode-current-mode)
     (rivet-mode-change-mode (car to-mode) (car (cdr (cddr to-mode))))))
+  (unless (string= major-mode (car to-mode))
 
 (defun rivet-mode-update-mode ()
   (when rivet-mode-p

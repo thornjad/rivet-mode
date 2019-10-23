@@ -35,8 +35,8 @@
 (require 'tcl)
 (require 'web-mode)
 
-(defvar host-mode (list "Web" 'web-mode))
-(defvar inner-mode (list "TCL" "<?" "?>" 'tcl-mode))
+(defvar rivet-mode-host-mode (list "Web" #'web-mode))
+(defvar rivet-mode-inner-mode (list "TCL" #'tcl-mode "<?" "?>"))
 
 (defvar-local rivet-mode-p nil)
 
@@ -48,26 +48,28 @@
 
 ;;; Setup and funs
 
-(defun rivet-mode-change-mode (to-mode func)
-  (let ((mode (if (listp mode-name) (car (last mode-name)) mode-name)))
-    (if (string= to-mode mode)
-        t
-      (funcall func)
-      ;; After the mode was set, we reread the "Local Variables" section.
-      (hack-local-variables)
+(defun rivet-mode-change-mode (to-mode)
+  (funcall (cadr to-mode))
 
-      (if rivet-switch-hook
-          (run-hooks 'rivet-switch-hook))
-      (if (eq font-lock-mode t)
-          (font-lock-ensure))
-      (if (fboundp 'turn-on-font-lock-if-enabled)
-          (turn-on-font-lock-if-enabled)
-        (turn-on-font-lock-if-desired)))))
+  ;; HACK this is crappy, but for some reason that funcall removes us from the
+  ;; post-command hook, so let's put us back in.
+  (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
+  (setq-local rivet-mode-p t)
+
+  ;; After the mode was set, we reread the "Local Variables" section.
+  (hack-local-variables)
+
+  (if rivet-switch-hook
+      (run-hooks 'rivet-switch-hook))
+  (if font-lock-mode (font-lock-ensure))
+  (if (fboundp 'turn-on-font-lock-if-enabled)
+      (turn-on-font-lock-if-enabled)
+    (turn-on-font-lock-if-desired)))
 
 (defun rivet-mode-maybe-change-mode (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
-    (rivet-mode-change-mode (car to-mode) (car (cdr (cddr to-mode))))))
   (unless (string= major-mode (car to-mode))
+    (rivet-mode-change-mode to-mode)))
 
 (defun rivet-mode-update-mode ()
   (when rivet-mode-p

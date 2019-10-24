@@ -72,7 +72,7 @@
 
 (defun rivet-mode-maybe-change-mode (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
-  (unless (string= major-mode (car to-mode))
+  (unless (string= major-mode (cadr to-mode))
     (rivet-mode-change-mode to-mode)))
 
 (defun rivet-mode-update-mode ()

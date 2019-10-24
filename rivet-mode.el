@@ -22,16 +22,11 @@
 ;;; Commentary;
 ;;
 ;; Rivet mode is a minor mode which enables mode-switching within Apache Rivet
-;; files, preserving indentation and other functionality. Rivet mode is based in
-;; some part on work done on two-mode-mode by the Apache Software Foundation in
-;; 1999.
+;; files, preserving indentation and other functionality. Note that hooks are
+;; not a focus right now and may not work. They will get more attention later.
 ;;
-;; Note that hooks are not a focus right now and may not work. They will get
-;; more attention later.
-;;
-;; There is a known issue where commands in rivet-mode buffers sometimes lag.
-;; This is mostly due to inneficiencies in this code, and the cost of loading
-;; major modes repeatedly. This is being investigated.
+;; Rivet mode was originally based in part on work done on two-mode-mode by the
+;; Apache Software Foundation in 1999.
 ;;
 ;;; Code:
 

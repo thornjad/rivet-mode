@@ -42,7 +42,8 @@
 (defvar rivet-mode-host-mode (list "Web" #'web-mode))
 (defvar rivet-mode-inner-mode (list "TCL" #'tcl-mode "<?" "?>"))
 
-(defvar-local rivet-mode-p nil)
+(defvar rivet-mode-p nil)
+(make-variable-buffer-local 'rivet-mode-p)
 
 (defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")
@@ -58,7 +59,7 @@
   ;; HACK this is crappy, but for some reason that funcall removes us from the
   ;; post-command hook, so let's put us back in.
   (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
-  (setq-local rivet-mode-p t)
+  (setq rivet-mode-p t)
 
   ;; After the mode was set, we reread the "Local Variables" section.
   (hack-local-variables)
@@ -98,7 +99,7 @@
   (interactive)
 
   (funcall (cadr rivet-mode-host-mode))
-  (setq-local rivet-mode-p t)
+  (setq rivet-mode-p t)
 
   ;; TODO need a way to make this take less time, and/or not call on EVERY post
   ;; command

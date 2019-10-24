@@ -40,6 +40,13 @@
 (defvar rivet-mode-p nil)
 (make-variable-buffer-local 'rivet-mode-p)
 
+(defvar rivet-mode-last-position 0
+  "Cursor postion from the last time an update was attempted.
+
+This provides a nice way to keep the update from running after /every/
+command.")
+(make-variable-buffer-local 'rivet-mode-last-postion)
+
 (defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")
 (defvar rivet-switch-hook nil
@@ -59,8 +66,7 @@
   ;; After the mode was set, we reread the "Local Variables" section.
   (hack-local-variables)
 
-  (if rivet-switch-hook
-      (run-hooks 'rivet-switch-hook)))
+  (if rivet-switch-hook (run-hooks 'rivet-switch-hook)))
 
 (defun rivet-mode-maybe-change-mode (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
@@ -68,9 +74,14 @@
     (rivet-mode-change-mode to-mode)))
 
 (defun rivet-mode-update-mode ()
-  (when (and rivet-mode-p (not (region-active-p)))
-    (let ((last-left-delim -1)
-          (last-right-delim -1))
+  (when (and rivet-mode-p
+           (not (region-active-p))
+           (not (equal (point) rivet-mode-last-position)))
+
+    ;; cache our position for the next call
+    (setq rivet-mode-last-position (point))
+
+    (let ((last-left-delim -1) (last-right-delim -1))
       (save-excursion
         (if (search-backward (caddr rivet-mode-inner-mode) nil t)
             (setq last-left-delim (point))))

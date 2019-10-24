@@ -60,7 +60,7 @@ command.")
 
   ;; HACK this is crappy, but for some reason that funcall removes us from the
   ;; post-command hook, so let's put us back in.
-  (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
+  (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t)
   (setq rivet-mode-p t)
 
   ;; After the mode was set, we reread the "Local Variables" section.
@@ -68,12 +68,12 @@ command.")
 
   (if rivet-switch-hook (run-hooks 'rivet-switch-hook)))
 
-(defun rivet-mode-maybe-change-mode (to-mode)
+(defun rivet-mode-change-mode-if-different (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
   (unless (string= major-mode (cadr to-mode))
     (rivet-mode-change-mode to-mode)))
 
-(defun rivet-mode-update-mode ()
+(defun rivet-maybe-update-mode ()
   (when (and rivet-mode-p
            (not (region-active-p))
            (not (equal (point) rivet-mode-last-position)))
@@ -91,8 +91,8 @@ command.")
       (if (and (not (and (= last-left-delim -1)
                      (= last-right-delim -1)))
              (>= last-left-delim last-right-delim))
-          (rivet-mode-maybe-change-mode rivet-mode-inner-mode)
-        (rivet-mode-maybe-change-mode rivet-mode-host-mode)))))
+          (rivet-mode-change-mode-if-different rivet-mode-inner-mode)
+        (rivet-mode-change-mode-if-different rivet-mode-host-mode)))))
 
 ;;;###autoload
 (defun rivet-mode ()
@@ -104,14 +104,14 @@ command.")
 
   ;; TODO need a way to make this take less time, and/or not call on EVERY post
   ;; command
-  (add-hook 'post-command-hook 'rivet-mode-update-mode nil t)
+  (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t)
   (make-local-variable 'minor-mode-alist)
 
   (or (assq 'rivet-mode-p minor-mode-alist)
      (setq minor-mode-alist
            (cons '(rivet-mode-p " rivet-mode") minor-mode-alist)))
 
-  (rivet-mode-update-mode)
+  (rivet-maybe-update-mode)
 
   (if rivet-hook
       (run-hooks 'rivet-hook)))

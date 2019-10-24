@@ -75,6 +75,21 @@
   (unless (string= major-mode (car to-mode))
     (rivet-mode-change-mode to-mode)))
 
+(defun rivet-mode-near-delim ()
+  "Determine if point has passed over a delim, which is a good bet we should run
+a full check."
+  (save-excursion
+    (forward-line 1)
+
+    (let ((last-left-delim -1)
+          (last-right-delim -1)
+          (bol (line-beginning-position -2)))
+      (if (search-backward (caddr rivet-mode-inner-mode) bol t)
+          (setq last-left-delim (point)))
+      (if (search-backward (cadddr rivet-mode-inner-mode) bol t)
+          (setq last-right-delim (point)))
+      (not (and (= last-left-delim -1) (= last-right-delim -1))))))
+
 (defun rivet-mode-update-mode ()
   (when (and rivet-mode-p (not (region-active-p)))
     (let ((last-left-delim -1) (last-right-delim -1))

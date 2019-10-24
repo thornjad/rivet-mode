@@ -65,10 +65,11 @@
 
   (if rivet-switch-hook
       (run-hooks 'rivet-switch-hook))
-  (if font-lock-mode (font-lock-ensure))
-  (if (fboundp 'turn-on-font-lock-if-enabled)
-      (turn-on-font-lock-if-enabled)
-    (turn-on-font-lock-if-desired)))
+  ;; (if font-lock-mode (font-lock-ensure))
+  ;; (if (fboundp 'turn-on-font-lock-if-enabled)
+  ;;     (turn-on-font-lock-if-enabled)
+  ;;   (turn-on-font-lock-if-desired))
+  )
 
 (defun rivet-mode-maybe-change-mode (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."

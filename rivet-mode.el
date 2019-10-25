@@ -1,9 +1,10 @@
-;;; rivet-mode.el -- A major mode for Apache Rivet -*- lexical-binding: t; -*-
+;;; rivet-mode.el --- Minor mode for editing Apache Rivet -*- lexical-binding: t; -*-
 ;;
 ;; Author: Jade Michael Thornton
-;; Copyright 2019
-;; Package-Requires ((emacs "25") (web-mode) (tcl))
+;; Copyright (c) 2019 Jade Michael Thornton
+;; Package-Requires: ((emacs "24") (web-mode "16"))
 ;; URL: https://gitlab.com/thornjad/rivet
+;; Version: 3.4.0
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -19,7 +20,7 @@
 ;; action of contract, negligence or other tortious action, arising out of
 ;; or in connection with the use or performance of this software.
 ;;
-;;; Commentary;
+;;; Commentary:
 ;;
 ;; Rivet mode is a minor mode which enables mode-switching within Apache Rivet
 ;; files, preserving indentation and other functionality. Note that hooks are
@@ -56,6 +57,9 @@ command.")
 ;;; Setup and funs
 
 (defun rivet-mode-change-mode (to-mode)
+  "Call TO-MODE, then set up the hook again and run rivet-switch-hook."
+
+  ;; call our new mode function
   (funcall (cadr to-mode))
 
   ;; HACK this is crappy, but for some reason that funcall removes us from the
@@ -96,7 +100,7 @@ command.")
 
 ;;;###autoload
 (defun rivet-mode ()
-  "Turn on Rivet mode"
+  "Turn on Rivet mode."
   (interactive)
 
   (funcall (cadr rivet-mode-host-mode))

@@ -35,8 +35,21 @@
 (require 'tcl)
 (require 'web-mode)
 
-(defvar rivet-mode-host-mode (list "Web" #'web-mode))
-(defvar rivet-mode-inner-mode (list "TCL" #'tcl-mode "<?" "?>"))
+(defvar rivet-mode-host-mode '("Web" #'web-mode)
+  "The host mode is the 'outer' mode, used for HTML.
+
+Format is '(NAME MAJOR-MODE).")
+
+(defvar rivet-mode-inner-mode '("TCL" #'tcl-mode)
+  "The inner mode is contained within the rivet-mode-delimiters, used for TCL.
+
+Format is '(NAME MAJOR-MODE).")
+
+(defvar rivet-mode-delimiters '("<?" "?>")
+  "These delimiters (left and right) denote the boundaries of the inner mode
+  (TCL).
+
+Format is '(LEFT-DELIMITER RIGHT-DELIMITER). Note that the '<?=' syntax is still included since it begins with '<?'.")
 
 (defvar rivet-mode-p nil)
 (make-variable-buffer-local 'rivet-mode-p)

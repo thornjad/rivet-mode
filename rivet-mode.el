@@ -55,35 +55,35 @@ Format is '(LEFT-DELIMITER RIGHT-DELIMITER). Note that the '<?=' syntax is still
 This provides a nice way to keep the update from running after /every/
 command."))
 
-(defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")
-(defvar rivet-switch-hook nil
   "*Hook called upon mode switching.")
+(defvar rivet-mode-hook nil
+(defvar rivet-mode-change-hook nil
 
 
 ;;; Setup and funs
 
-(defun rivet-mode-change-mode (to-mode)
   "Call TO-MODE, then set up the hook again and run rivet-switch-hook."
+(defun rivet-mode--change-mode (to-mode)
 
   ;; call our new mode function
   (funcall (cadr to-mode))
 
   ;; HACK this is crappy, but for some reason that funcall removes us from the
   ;; post-command hook, so let's put us back in.
-  (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t)
+  (add-hook 'post-command-hook 'rivet-mode--maybe-change-mode nil t)
 
   ;; After the mode was set, we reread the "Local Variables" section.
   (hack-local-variables)
 
-  (if rivet-switch-hook (run-hooks 'rivet-switch-hook)))
+  (if rivet-mode-change-hook (run-hooks 'rivet-mode-change-hook)))
 
 (defun rivet-mode-change-mode-if-different (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
   (unless (equal major-mode (cadr to-mode))
     (rivet-mode-change-mode to-mode)))
+(defun rivet-mode--maybe-change-mode ()
 
-(defun rivet-maybe-update-mode ()
   (when (and (not (region-active-p))
            (not (equal (point) rivet-mode--last-position)))
 
@@ -117,14 +117,12 @@ Rivet files."
   (if (eql (point) 1)
       (progn
         (funcall (cadr rivet-mode-host-mode))
+        (add-hook 'post-command-hook 'rivet-mode--maybe-change-mode nil t))
+    (rivet-mode--maybe-change-mode))
 
         ;; TODO need a way to make this take less time, and/or not call on EVERY
         ;; post command
-        (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t))
-    (rivet-maybe-update-mode))
-
-  (if rivet-hook
-      (run-hooks 'rivet-hook)))
+  (if rivet-mode-hook (run-hooks 'rivet-mode-hook)))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.rvt\\'" . rivet-mode))

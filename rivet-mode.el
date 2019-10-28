@@ -32,12 +32,12 @@
 (require 'tcl)
 (require 'web-mode)
 
-(defvar rivet-mode-host-mode '("Web" #'web-mode)
+(defvar rivet-mode-host-mode '("Web" web-mode)
   "The host mode is the 'outer' mode, used for HTML.
 
 Format is '(NAME MAJOR-MODE).")
 
-(defvar rivet-mode-inner-mode '("TCL" #'tcl-mode)
+(defvar rivet-mode-inner-mode '("TCL" tcl-mode)
   "The inner mode is contained within the rivet-mode-delimiters, used for TCL.
 
 Format is '(NAME MAJOR-MODE).")

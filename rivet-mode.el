@@ -111,10 +111,10 @@ Rivet mode intelligently switches between TCL and Web major modes for editing
 Rivet files."
   :lighter " Rivet"
 
-  ;; Chances are we are at position 0. Since the inner mode requires delimiters
-  ;; and we could not possibly be within a delimiter at position 0, we must be
-  ;; in the host mode. If, however, we are not at position 0, we need to check.
-  (if (eql (point) 0)
+  ;; Chances are we are at position 1. Since the inner mode requires delimiters
+  ;; and we could not possibly be within a delimiter at position 1, we must be
+  ;; in the host mode. If, however, we are not at position 1, we need to check.
+  (if (eql (point) 1)
       (progn
         (funcall (cadr rivet-mode-host-mode))
 

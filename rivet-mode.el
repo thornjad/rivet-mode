@@ -26,23 +26,29 @@
 ;; detects whether TCL or HTML is currently being edited and uses the major
 ;; modes tcl-mode and web-mode, respectively.
 ;;
+;; Package requires `tcl' (built-in) and `web-mode'. To use another mode,
+;; customize `rivet-mode-host-mode' and `rivet-mode-inner-mode' to suit.
+;;
 ;;; Code:
-
-(require 'tcl)
-(require 'web-mode)
 
 ;;; Variables
 
-(defvar rivet-mode-host-mode '("Web" web-mode)
+(defvar rivet-mode-host-mode '("Web" web-mode web-mode)
   "The host mode is the 'outer' mode, i.e. HTML, CSS and JS.
 
-Format is '(NAME MAJOR-MODE).")
+Format is '(NAME MAJOR-MODE PACKAGE).
 
-(defvar rivet-mode-inner-mode '("TCL" tcl-mode)
+The PACKAGE part of the list is the name of the package which provides
+MAJOR-MODE.")
+
+(defvar rivet-mode-inner-mode '("TCL" tcl-mode tcl)
   "The inner mode is contained within the `rivet-mode-delimiters', used for TCL.
 
-Format is '(NAME MAJOR-MODE). See `rivet-mode-delimiters' for more on the
-demarcation between the inner and host modes.")
+Format is '(NAME MAJOR-MODE PACKAGE). See `rivet-mode-delimiters' for more on
+the demarcation between the inner and host modes.
+
+The PACKAGE part of the list is the name of the package which provides
+MAJOR-MODE.")
 
 (defvar rivet-mode-delimiters '("<?" "?>")
   "These delimiters denote the boundaries of the 'inner' mode, i.e. TCL.
@@ -121,6 +127,16 @@ that section's major mode."
 Rivet mode intelligently switches between TCL and Web major modes for editing
 Rivet files."
   :lighter " Rivet"
+
+  ;; Load the required packages
+  (unless (require (caddr rivet-mode-host-mode) nil t)
+    (error
+     "Rivet mode requires %s to work properly. Please ensure this package is available."
+     (symbol-name (caddr rivet-mode-host-mode))))
+  (unless (require (caddr rivet-mode-inner-mode) nil t)
+    (error
+     "Rivet mode requires %s to work properly. Please ensure this package is available."
+     (symbol-name (caddr rivet-mode-inner-mode))))
 
   ;; Chances are we are at position 1 because the file has just be opened cold.
   ;; Since the inner mode requires delimiters and we could not possibly be

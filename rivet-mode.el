@@ -82,10 +82,6 @@ not be changed manually."))
 
   (if rivet-mode-change-hook (run-hooks 'rivet-mode-change-hook)))
 
-(defun rivet-mode-change-mode-if-different (to-mode)
-  "Change to TO-MODE if current mode is not TO-MODE."
-  (unless (equal major-mode (cadr to-mode))
-    (rivet-mode-change-mode to-mode)))
 (defun rivet-mode--maybe-change-mode ()
   "Change switch between inner and host modes if appropriate.
 
@@ -105,11 +101,14 @@ that section's major mode."
       (save-excursion
         (if (search-backward (cadr rivet-mode-delimiters) nil t)
             (setq last-right-delim (point))))
-      (if (and (not (and (= last-left-delim -1)
-                     (= last-right-delim -1)))
-             (>= last-left-delim last-right-delim))
-          (rivet-mode-change-mode-if-different rivet-mode-inner-mode)
-        (rivet-mode-change-mode-if-different rivet-mode-host-mode)))))
+      (let ((section-mode
+             (if (and (not (and (= last-left-delim -1)
+                            (= last-right-delim -1)))
+                    (>= last-left-delim last-right-delim))
+                 rivet-mode-inner-mode
+               rivet-mode-host-mode)))
+        (unless (equal major-mode (cadr section-mode))
+          (rivet-mode--change-mode section-mode))))))
 
 
 ;;; Minor mode and auto-mode setup

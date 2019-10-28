@@ -110,23 +110,26 @@ command."))
         (rivet-mode-change-mode-if-different rivet-mode-host-mode)))))
 
 ;;;###autoload
-(defun rivet-mode ()
-  "Turn on Rivet mode."
-  (interactive)
+(define-minor-mode rivet-mode
+  "Minor mode for editing Apache Rivet files.
 
-  (funcall (cadr rivet-mode-host-mode))
+Rivet mode intelligently switches between TCL and Web major modes for editing
+Rivet files."
+  :lighter " Rivet"
+
+  ;; Chances are we are at position 0. Since the inner mode requires delimiters
+  ;; and we could not possibly be within a delimiter at position 0, we must be
+  ;; in the host mode. If, however, we are not at position 0, we need to check.
+  (if (eql (point) 0)
+      (progn
+        (funcall (cadr rivet-mode-host-mode))
+
+        ;; TODO need a way to make this take less time, and/or not call on EVERY
+        ;; post command
+        (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t))
+    (rivet-maybe-update-mode))
+
   (setq rivet-mode-p t)
-
-  ;; TODO need a way to make this take less time, and/or not call on EVERY post
-  ;; command
-  (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t)
-  (make-local-variable 'minor-mode-alist)
-
-  (or (assq 'rivet-mode-p minor-mode-alist)
-     (setq minor-mode-alist
-           (cons '(rivet-mode-p " rivet-mode") minor-mode-alist)))
-
-  (rivet-maybe-update-mode)
 
   (if rivet-hook
       (run-hooks 'rivet-hook)))

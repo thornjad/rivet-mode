@@ -22,49 +22,53 @@
 ;;
 ;;; Commentary:
 ;;
-;; Rivet mode is a minor mode which enables mode-switching within Apache Rivet
-;; files, preserving indentation and other functionality. Note that hooks are
-;; not a focus right now and may not work. They will get more attention later.
+;; Rivet mode is a minor mode for editing Apache Rivet files. It automatically
+;; detects whether TCL or HTML is currently being edited and uses the major
+;; modes tcl-mode and web-mode, respectively.
 ;;
 ;;; Code:
-
 
 (require 'tcl)
 (require 'web-mode)
+
+;;; Variables
 
 (defvar rivet-mode-host-mode '("Web" web-mode)
-  "The host mode is the 'outer' mode, used for HTML.
+  "The host mode is the 'outer' mode, i.e. HTML, CSS and JS.
 
 Format is '(NAME MAJOR-MODE).")
 
 (defvar rivet-mode-inner-mode '("TCL" tcl-mode)
-  "The inner mode is contained within the rivet-mode-delimiters, used for TCL.
+  "The inner mode is contained within the `rivet-mode-delimiters', used for TCL.
 
-Format is '(NAME MAJOR-MODE).")
+Format is '(NAME MAJOR-MODE). See `rivet-mode-delimiters' for more on the
+demarcation between the inner and host modes.")
 
 (defvar rivet-mode-delimiters '("<?" "?>")
-  "These delimiters (left and right) denote the boundaries of the inner mode
-  (TCL).
+  "These delimiters denote the boundaries of the 'inner' mode, i.e. TCL.
 
-Format is '(LEFT-DELIMITER RIGHT-DELIMITER). Note that the '<?=' syntax is still included since it begins with '<?'.")
+The car and cadr are the left and right delimiters. That is to say the format is
+'(LEFT-DELIMITER RIGHT-DELIMITER). Note that the '<?=' output syntax is included
+since it begins with '<?'.")
 
 (make-variable-buffer-local
  (defvar rivet-mode--last-position 0
-   "Cursor postion from the last time an update was attempted.
+   "Value of point from the last time an update was attempted.
 
-This provides a nice way to keep the update from running after /every/
-command."))
+This buffer-local variable allows `rivet-mode' to tell if the point has moved,
+and if, therefore, the current mode should be re-evaluated. This variable should
+not be changed manually."))
 
-  "*Hook called by `rivet-mode'.")
-  "*Hook called upon mode switching.")
 (defvar rivet-mode-hook nil
+  "*Hook called upon running minor mode function `rivet-mode'.")
 (defvar rivet-mode-change-hook nil
+  "*Hook called upon changing between inner and host modes.")
 
 
-;;; Setup and funs
+;;; The parts that do the real work
 
-  "Call TO-MODE, then set up the hook again and run rivet-switch-hook."
 (defun rivet-mode--change-mode (to-mode)
+  "Call TO-MODE, then set up the hook again and run rivet-mode-change-hook."
 
   ;; call our new mode function
   (funcall (cadr to-mode))
@@ -83,7 +87,11 @@ command."))
   (unless (equal major-mode (cadr to-mode))
     (rivet-mode-change-mode to-mode)))
 (defun rivet-mode--maybe-change-mode ()
+  "Change switch between inner and host modes if appropriate.
 
+If there is no active region and point has changed, then determine if point is
+in a host or inner section. If point has moved to a different section, change to
+that section's major mode."
   (when (and (not (region-active-p))
            (not (equal (point) rivet-mode--last-position)))
 
@@ -103,6 +111,10 @@ command."))
           (rivet-mode-change-mode-if-different rivet-mode-inner-mode)
         (rivet-mode-change-mode-if-different rivet-mode-host-mode)))))
 
+
+;;; Minor mode and auto-mode setup
+
+
 ;;;###autoload
 (define-minor-mode rivet-mode
   "Minor mode for editing Apache Rivet files.
@@ -111,17 +123,17 @@ Rivet mode intelligently switches between TCL and Web major modes for editing
 Rivet files."
   :lighter " Rivet"
 
-  ;; Chances are we are at position 1. Since the inner mode requires delimiters
-  ;; and we could not possibly be within a delimiter at position 1, we must be
-  ;; in the host mode. If, however, we are not at position 1, we need to check.
+  ;; Chances are we are at position 1 because the file has just be opened cold.
+  ;; Since the inner mode requires delimiters and we could not possibly be
+  ;; within a delimiter at position 1 (because the delimiters are at least two
+  ;; characters), we must be in the host mode. If, however, we are not at
+  ;; position 1, we need to check.
   (if (eql (point) 1)
       (progn
         (funcall (cadr rivet-mode-host-mode))
         (add-hook 'post-command-hook 'rivet-mode--maybe-change-mode nil t))
     (rivet-mode--maybe-change-mode))
 
-        ;; TODO need a way to make this take less time, and/or not call on EVERY
-        ;; post command
   (if rivet-mode-hook (run-hooks 'rivet-mode-hook)))
 
 ;;;###autoload

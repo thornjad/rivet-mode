@@ -85,7 +85,7 @@ command."))
 
 (defun rivet-mode-change-mode-if-different (to-mode)
   "Change to TO-MODE if current mode is not TO-MODE."
-  (unless (string= major-mode (cadr to-mode))
+  (unless (equal major-mode (cadr to-mode))
     (rivet-mode-change-mode to-mode)))
 
 (defun rivet-maybe-update-mode ()

@@ -4,7 +4,7 @@
 ;; Copyright (c) 2019 Jade Michael Thornton
 ;; Package-Requires: ((emacs "24") (web-mode "16"))
 ;; URL: https://gitlab.com/thornjad/rivet
-;; Version: 4.0.0
+;; Version: 4.0.1
 ;;
 ;; This file is not part of GNU Emacs
 ;;
@@ -26,8 +26,19 @@
 ;; detects whether TCL or HTML is currently being edited and uses the major
 ;; modes tcl-mode and web-mode, respectively.
 ;;
-;; Package requires `tcl' (built-in) and `web-mode'. To use another mode,
+;; By default, `rivet-mode' requires `tcl' (built-in) and `web-mode'. To use another mode,
 ;; customize `rivet-mode-host-mode' and `rivet-mode-inner-mode' to suit.
+
+;; The variable =rivet-mode-host-mode= determines the "host" major mode, which
+;; is web-mode by default.
+
+;; The variable =rivet-mode-inner-mode= determines the "inner" major mode, which
+;; is the built-in tcl-mode by default.
+
+;; The variable =rivet-mode-delimiters= defines the left and right delimiters
+;; which demark the bounds of the "inner" major mode (TCL). These are "<?" and
+;; "?>" by default. Note that the "<?=" delimiter, which marks the start of an
+;; expression, still begins with "<?" and so will be caught.
 ;;
 ;;; Code:
 
@@ -135,8 +146,8 @@ Rivet files."
        "Rivet mode requires %s to work properly. Please ensure this package is available."
        (symbol-name (caddr mode)))))
 
-  ;; Chances are we are at position 1 because the file has just be opened cold.
-  ;; Since the inner mode requires delimiters and we could not possibly be
+  ;; Chances are we are at position 1 because the file has just been opened
+  ;; cold. Since the inner mode requires delimiters and we could not possibly be
   ;; within a delimiter at position 1 (because the delimiters are at least two
   ;; characters), we must be in the host mode. If, however, we are not at
   ;; position 1, we need to check.

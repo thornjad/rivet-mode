@@ -129,14 +129,11 @@ Rivet files."
   :lighter " Rivet"
 
   ;; Load the required packages
-  (unless (require (caddr rivet-mode-host-mode) nil t)
-    (error
-     "Rivet mode requires %s to work properly. Please ensure this package is available."
-     (symbol-name (caddr rivet-mode-host-mode))))
-  (unless (require (caddr rivet-mode-inner-mode) nil t)
-    (error
-     "Rivet mode requires %s to work properly. Please ensure this package is available."
-     (symbol-name (caddr rivet-mode-inner-mode))))
+  (dolist (mode (list rivet-mode-host-mode rivet-mode-inner-mode))
+    (unless (require (caddr mode) nil t)
+      (error
+       "Rivet mode requires %s to work properly. Please ensure this package is available."
+       (symbol-name (caddr mode)))))
 
   ;; Chances are we are at position 1 because the file has just be opened cold.
   ;; Since the inner mode requires delimiters and we could not possibly be

@@ -26,9 +26,6 @@
 ;; files, preserving indentation and other functionality. Note that hooks are
 ;; not a focus right now and may not work. They will get more attention later.
 ;;
-;; Rivet mode was originally based in part on work done on two-mode-mode by the
-;; Apache Software Foundation in 1999.
-;;
 ;;; Code:
 
 

@@ -91,10 +91,10 @@ command."))
 (defun rivet-maybe-update-mode ()
   (when (and rivet-mode-p
            (not (region-active-p))
-           (not (equal (point) rivet-mode-last-position)))
+           (not (equal (point) rivet-mode--last-position)))
 
     ;; cache our position for the next call
-    (setq rivet-mode-last-position (point))
+    (setq rivet-mode--last-position (point))
 
     (let ((last-left-delim -1) (last-right-delim -1))
       (save-excursion

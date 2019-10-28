@@ -134,6 +134,9 @@ command."))
   (if rivet-hook
       (run-hooks 'rivet-hook)))
 
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.rvt\\'" . rivet-mode))
+
 (provide 'rivet-mode)
 
 ;;; rivet-mode.el ends here

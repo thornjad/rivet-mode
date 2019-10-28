@@ -1,9 +1,0 @@
-rivet-mode.el -- Support mode-switching in Apache Rivet
-
-Rivet mode enables mode-switching within Apache Rivet files, preserving
-indentation and other functionality. Rivet mode is based on work done on
-two-mode-mode by the Apache Software Foundation in 1999.
-
-Copyright (c) 2019 Jade Michael Thornton
-
-Rivet mode is licensed under the terms of the ISC license

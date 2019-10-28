@@ -48,10 +48,6 @@ Format is '(NAME MAJOR-MODE).")
 
 Format is '(LEFT-DELIMITER RIGHT-DELIMITER). Note that the '<?=' syntax is still included since it begins with '<?'.")
 
-;; TODO is this even necessary?
-(make-variable-buffer-local
- (defvar rivet-mode-p t))
-
 (make-variable-buffer-local
  (defvar rivet-mode--last-position 0
    "Cursor postion from the last time an update was attempted.
@@ -76,7 +72,6 @@ command."))
   ;; HACK this is crappy, but for some reason that funcall removes us from the
   ;; post-command hook, so let's put us back in.
   (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t)
-  (setq rivet-mode-p t)
 
   ;; After the mode was set, we reread the "Local Variables" section.
   (hack-local-variables)
@@ -89,8 +84,7 @@ command."))
     (rivet-mode-change-mode to-mode)))
 
 (defun rivet-maybe-update-mode ()
-  (when (and rivet-mode-p
-           (not (region-active-p))
+  (when (and (not (region-active-p))
            (not (equal (point) rivet-mode--last-position)))
 
     ;; cache our position for the next call
@@ -128,8 +122,6 @@ Rivet files."
         ;; post command
         (add-hook 'post-command-hook 'rivet-maybe-update-mode nil t))
     (rivet-maybe-update-mode))
-
-  (setq rivet-mode-p t)
 
   (if rivet-hook
       (run-hooks 'rivet-hook)))

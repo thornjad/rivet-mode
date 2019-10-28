@@ -98,10 +98,10 @@ command."))
 
     (let ((last-left-delim -1) (last-right-delim -1))
       (save-excursion
-        (if (search-backward (caddr rivet-mode-inner-mode) nil t)
+        (if (search-backward (car rivet-mode-delimiters) nil t)
             (setq last-left-delim (point))))
       (save-excursion
-        (if (search-backward (cadddr rivet-mode-inner-mode) nil t)
+        (if (search-backward (cadr rivet-mode-delimiters) nil t)
             (setq last-right-delim (point))))
       (if (and (not (and (= last-left-delim -1)
                      (= last-right-delim -1)))

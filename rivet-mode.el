@@ -51,15 +51,16 @@ Format is '(NAME MAJOR-MODE).")
 
 Format is '(LEFT-DELIMITER RIGHT-DELIMITER). Note that the '<?=' syntax is still included since it begins with '<?'.")
 
-(defvar rivet-mode-p nil)
-(make-variable-buffer-local 'rivet-mode-p)
+;; TODO is this even necessary?
+(make-variable-buffer-local
+ (defvar rivet-mode-p t))
 
-(defvar rivet-mode-last-position 0
-  "Cursor postion from the last time an update was attempted.
+(make-variable-buffer-local
+ (defvar rivet-mode--last-position 0
+   "Cursor postion from the last time an update was attempted.
 
 This provides a nice way to keep the update from running after /every/
-command.")
-(make-variable-buffer-local 'rivet-mode-last-postion)
+command."))
 
 (defvar rivet-hook nil
   "*Hook called by `rivet-mode'.")

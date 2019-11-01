@@ -1,0 +1,78 @@
+#+Title: Changelog
+
+** Unreleased
+
+*** Added
+- This changelog
+
+** v4.0.1 [10-28-2019]
+
+*** Changed
+- Improved documentation
+
+** v4.0.0 [10-28-2019]
+
+*** Changed
+- Delimiters now use their own variable, =rivet-mode-delimiters=
+- Rivet mode is now a proper minor mode, not just a function that says its a
+  minor mode.
+- Derive whether Rivet mode is active, rather than tracking with a predicate
+  variable.
+- Don't bother looking for delimiters on cold file open.
+- Rename =rivet-hook= and =rivet-switch-hook= to =rivet-mode-hook= and
+  =rivet-mode-switch-hook=, respectively.
+- Improved documentation
+
+*** Added
+- Dynamically required major mode packages, supporting the ability to change
+  them via the inner and host mode variables.
+- Autoload Rivet mode for files with =rvt= extension.
+
+** v3.4.0 [10-24-2019]
+
+*** Changed
+- Only check for mode change if point moved.
+- Improved documentation
+
+** v3.3.0 [10-24-2019]
+
+*** Changed
+- Fix check for current mode so we don't always change mode.
+- Don't manually activate font-lock
+- Improved documentation
+
+** v3.2.1 [10-23-2019]
+
+*** Changed
+- Don't change mode if region is active.
+
+** v3.2.0 [10-23-2019]
+
+*** Changed
+- Fixed search for left delimiter which always returned nothing.
+- Depend on Emacs to tell us the major mode instead of caching what it should
+  be. Emacs is more reliable.
+- Reorder =rivet-mode-inner-mode= to be ='(NAME MODE LEFT-DELIM RIGHT-DELIM)=
+
+*** Removed
+- Don't message the new major mode.
+
+** v3.1.0 [10-23-2019]
+
+*** Changed
+- Rename =rivet-mode-update= to =rivet-mode-maybe-update-p=
+
+*** Removed
+- Replace timer check with post-command-hook. Fixes a memory leak in the timer.
+
+** v3.0.0 [08-08-2019]
+Complete reversal of version 2, return to a basis of two-mode-mode, but with
+fixes to bring it up to par with polymode.
+
+** v2.0.0 [04-24-2019]
+Initial tagged release. Version 1 was derivative of the 1999 Apache
+two-mode-mode. It was slow, didn't handle indentation properly and couldn't
+create regions which crossed delimiters.
+
+Version 2 is a complete rewrite as polymode, depending entirely upon polymode
+0.1.

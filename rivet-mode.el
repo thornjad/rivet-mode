@@ -92,7 +92,7 @@ not be changed manually."))
 
   ;; HACK this is crappy, but for some reason that funcall removes us from the
   ;; post-command hook, so let's put us back in.
-  (add-hook 'post-command-hook 'rivet-mode--maybe-change-mode nil t)
+  (add-hook 'post-command-hook #'rivet-mode--maybe-change-mode nil t)
 
   ;; After the mode was set, we reread the "Local Variables" section.
   (hack-local-variables)
@@ -143,7 +143,7 @@ Rivet files."
   (dolist (mode (list rivet-mode-host-mode rivet-mode-inner-mode))
     (unless (require (caddr mode) nil t)
       (error
-       "Rivet mode requires %s to work properly. Please ensure this package is available."
+       "Rivet mode requires %s to work properly. Please ensure this package is available"
        (symbol-name (caddr mode)))))
 
   ;; Chances are we are at position 1 because the file has just been opened
@@ -154,7 +154,7 @@ Rivet files."
   (if (eql (point) 1)
       (progn
         (funcall (cadr rivet-mode-host-mode))
-        (add-hook 'post-command-hook 'rivet-mode--maybe-change-mode nil t))
+        (add-hook 'post-command-hook #'rivet-mode--maybe-change-mode nil t))
     (rivet-mode--maybe-change-mode))
 
   (if rivet-mode-hook (run-hooks 'rivet-mode-hook)))

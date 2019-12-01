@@ -2,8 +2,14 @@
 
 ** Unreleased
 
+** v4.0.2 [11-30-2019]
+
 *** Added
 - This changelog
+
+*** Changed
+- Follow doc guidelines better
+- Sharp quote where appropriate
 
 ** v4.0.1 [10-28-2019]
 

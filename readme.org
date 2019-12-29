@@ -5,6 +5,10 @@ Rivet mode is a minor mode for editing Apache Rivet files. It automatically
 detects whether TCL or HTML is currently being edited and uses the major modes
 tcl-mode and web-mode, respectively.
 
+* Installation
+
+Install the =rivet-mode= package from MELPA.
+
 * Customization
 
 The variable =rivet-mode-host-mode= determines the "host" major mode, which is

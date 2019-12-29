@@ -1,7 +1,7 @@
 #+TITLE: Rivet Mode
 #+AUTHOR: Jade Michael Thornton
 
-[[https://melpa.org/#/rivet-mode][file:https://melpa.org/packages/rivet-mode-badge.svg]] [[./LICENSE][file:https://img.shields.io/badge/license-ISC-green]] [[https://gitlab.com/thornjad/rivet-mode][file:https://img.shields.io/github/languages/code-size/thornjad/rivet-mode?style=plastic]] [[https://gitlab.com/thornjad/rivet-mode/-/tags][file:https://img.shields.io/github/v/tag/thornjad/rivet-mode?style=plastic]]
+[[https://melpa.org/#/rivet-mode][file:https://melpa.org/packages/rivet-mode-badge.svg]] [[./LICENSE][file:https://img.shields.io/badge/license-ISC-green.svg]] [[https://gitlab.com/thornjad/rivet-mode][file:https://img.shields.io/github/languages/code-size/thornjad/rivet-mode.svg]] [[https://gitlab.com/thornjad/rivet-mode/-/tags][file:https://img.shields.io/github/v/tag/thornjad/rivet-mode.svg]]
 
 Rivet mode is a minor mode for editing Apache Rivet files. It automatically
 detects whether TCL or HTML is currently being edited and uses the major modes

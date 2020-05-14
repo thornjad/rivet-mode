@@ -37,7 +37,7 @@
 ;; "?>" by default. Note that the "<?=" delimiter, which marks the start of an
 ;; expression, still begins with "<?" and so will be caught.
 
-;; Copying:
+;;; License:
 ;;
 ;; Copyright (c) 2019-2020 Jade Michael Thornton
 ;;

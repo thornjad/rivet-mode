@@ -1,7 +1,7 @@
 ;;; rivet-mode.el --- Minor mode for editing Apache Rivet -*- lexical-binding: t; -*-
 ;;
 ;; Author: Jade Michael Thornton
-;; Copyright (c) 2019 Jade Michael Thornton
+;; Copyright (c) 2019-2020 Jade Michael Thornton
 ;; Package-Requires: ((emacs "24") (web-mode "16"))
 ;; URL: https://gitlab.com/thornjad/rivet-mode
 ;; Version: 4.0.2

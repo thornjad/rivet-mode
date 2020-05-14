@@ -19,8 +19,10 @@
 ;; whatsoever resulting from loss of use, data or profits, whether in an
 ;; action of contract, negligence or other tortious action, arising out of
 ;; or in connection with the use or performance of this software.
-;;
+
 ;;; Commentary:
+;;
+;; [![MELPA: rivet-mode](file:https://melpa.org/packages/rivet-mode-badge.svg)](https://melpa.org/#/rivet-mode) [![ISC License](file:https://img.shields.io/badge/license-ISC-green.svg)](./LICENSE) [![](file:https://img.shields.io/github/languages/code-size/thornjad/rivet-mode.svg)](https://gitlab.com/thornjad/rivet-mode) [![](file:https://img.shields.io/github/v/tag/thornjad/rivet-mode.svg?label=version&color=yellowgreen)](https://gitlab.com/thornjad/rivet-mode/-/tags)
 ;;
 ;; Rivet mode is a minor mode for editing Apache Rivet files. It automatically
 ;; detects whether TCL or HTML is currently being edited and uses the major
@@ -39,8 +41,9 @@
 ;; which demark the bounds of the "inner" major mode (TCL). These are "<?" and
 ;; "?>" by default. Note that the "<?=" delimiter, which marks the start of an
 ;; expression, still begins with "<?" and so will be caught.
-;;
+
 ;;; Code:
+
 
 ;;; Variables
 

@@ -17,6 +17,25 @@ suit.
 
 Install the `rivet-mode` package from MELPA.
 
+## Usage
+
+The mode will be activated upon opening a Rivet file. There are a handful of
+convenient function available inside this file. It is recommended to bind
+these to keys of your choosing.
+
+Provided functions:
+
+- `rivet-insert-tcl`: Insert TCL tags ("<?" and "?>") at point, and move point
+inside of the tags. This will also switch to TCL mode.
+- `rivet-insert-begin-tcl`: Insert an opening TCL tag at point and move inside
+it.
+- `rivet-insert-end-tcl`: Insert a closing TCL tag at point and move outside
+it. This will also switch to web mode.
+- `rivet-insert-echo`: Insert TCL echo tags ("<?=" and "?>") at point and move
+inside them. This will also switch to TCL mode.
+- `rivet-insert-begin-echo`: Insert an opening TCL echo tag at point and move
+inside it.
+
 ## Customization
 
 The variable `rivet-mode-host-mode` determines the "host" major mode, which

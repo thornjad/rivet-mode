@@ -2,6 +2,11 @@
 
 ** Unreleased
 
+** v4.1.0 [2020-10-13]
+
+*** Added
+- Functions `rivet-insert-*`
+
 ** v4.0.2 [11-30-2019]
 
 *** Added

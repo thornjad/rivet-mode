@@ -1,13 +1,11 @@
 #+Title: Changelog
 
-** Unreleased
-
 ** v4.1.0 [2020-10-13]
 
 *** Added
 - Functions `rivet-insert-*`
 
-** v4.0.2 [11-30-2019]
+** v4.0.2 [2019-11-30]
 
 *** Added
 - This changelog
@@ -16,12 +14,12 @@
 - Follow doc guidelines better
 - Sharp quote where appropriate
 
-** v4.0.1 [10-28-2019]
+** v4.0.1 [2019-10-28]
 
 *** Changed
 - Improved documentation
 
-** v4.0.0 [10-28-2019]
+** v4.0.0 [2019-10-28]
 
 *** Changed
 - Delimiters now use their own variable, =rivet-mode-delimiters=
@@ -39,25 +37,25 @@
   them via the inner and host mode variables.
 - Autoload Rivet mode for files with =rvt= extension.
 
-** v3.4.0 [10-24-2019]
+** v3.4.0 [2019-10-24]
 
 *** Changed
 - Only check for mode change if point moved.
 - Improved documentation
 
-** v3.3.0 [10-24-2019]
+** v3.3.0 [2019-10-24]
 
 *** Changed
 - Fix check for current mode so we don't always change mode.
 - Don't manually activate font-lock
 - Improved documentation
 
-** v3.2.1 [10-23-2019]
+** v3.2.1 [2019-10-23]
 
 *** Changed
 - Don't change mode if region is active.
 
-** v3.2.0 [10-23-2019]
+** v3.2.0 [2019-10-23]
 
 *** Changed
 - Fixed search for left delimiter which always returned nothing.
@@ -68,7 +66,7 @@
 *** Removed
 - Don't message the new major mode.
 
-** v3.1.0 [10-23-2019]
+** v3.1.0 [2019-10-23]
 
 *** Changed
 - Rename =rivet-mode-update= to =rivet-mode-maybe-update-p=
@@ -76,11 +74,11 @@
 *** Removed
 - Replace timer check with post-command-hook. Fixes a memory leak in the timer.
 
-** v3.0.0 [08-08-2019]
+** v3.0.0 [2019-08-08]
 Complete reversal of version 2, return to a basis of two-mode-mode, but with
 fixes to bring it up to par with polymode.
 
-** v2.0.0 [04-24-2019]
+** v2.0.0 [2019-04-24]
 Initial tagged release. Version 1 was derivative of the 1999 Apache
 two-mode-mode. It was slow, didn't handle indentation properly and couldn't
 create regions which crossed delimiters.

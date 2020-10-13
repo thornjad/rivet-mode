@@ -1,7 +1,7 @@
 # rivet-mode - A minor mode for editing Apache Rivet files
 
 _Author:_ Jade Michael Thornton<br>
-_Version:_ 4.0.2<br>
+_Version:_ 4.1.0<br>
 
 [![MELPA: rivet-mode](https://melpa.org/packages/rivet-mode-badge.svg)](https://melpa.org/#/rivet-mode) [![ISC License](https://img.shields.io/badge/license-ISC-green.svg)](./LICENSE) [![](https://img.shields.io/github/languages/code-size/thornjad/rivet-mode.svg)](https://gitlab.com/thornjad/rivet-mode) [![](https://img.shields.io/github/v/tag/thornjad/rivet-mode.svg?label=version&color=yellowgreen)](https://gitlab.com/thornjad/rivet-mode/-/tags)
 

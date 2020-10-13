@@ -4,7 +4,7 @@
 ;; Copyright (c) 2019-2020 Jade Michael Thornton
 ;; Package-Requires: ((emacs "24") (web-mode "16"))
 ;; URL: https://gitlab.com/thornjad/rivet-mode
-;; Version: 4.0.2
+;; Version: 4.1.0
 ;;
 ;; This file is not part of GNU Emacs
 
